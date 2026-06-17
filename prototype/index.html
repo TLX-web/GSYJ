@@ -1,0 +1,2043 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>福建高速监测 APP 原型</title>
+  <style>
+    :root {
+      --bg: #f5f8fb;
+      --surface: #ffffff;
+      --surface-2: #f7fafc;
+      --text: #172033;
+      --muted: #6c7788;
+      --line: #e6ebf0;
+      --primary: #1269f2;
+      --primary-2: #0bb79b;
+      --primary-soft: #eaf3ff;
+      --green: #14a67d;
+      --red: #ef3349;
+      --orange: #f97316;
+      --yellow: #d9a900;
+      --blue: #1677ff;
+      --gray: #98a2b3;
+      --shadow: 0 10px 28px rgba(15, 40, 80, 0.08);
+      --radius: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--text);
+      background: #dde7f2;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      background: transparent;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .phone {
+      width: min(430px, 100vw);
+      height: min(920px, 100vh);
+      min-height: 720px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg);
+      box-shadow: 0 22px 70px rgba(26, 46, 74, 0.24);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .app {
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    body.dark {
+      --bg: #111827;
+      --surface: #182235;
+      --surface-2: #121c2d;
+      --text: #edf4ff;
+      --muted: #a8b3c5;
+      --line: #26344d;
+      --primary-soft: #122b52;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+      background: #0a0f18;
+    }
+
+    .login-screen {
+      min-height: 100%;
+      padding: 34px 24px;
+      background:
+        linear-gradient(180deg, rgba(18,105,242,0.12), rgba(245,248,251,0) 38%),
+        var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .login-panel {
+      padding: 22px;
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .input-wrap {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .input-wrap input {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      min-width: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .check-row,
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .check-row {
+      justify-content: flex-start;
+      margin: 2px 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .primary-btn {
+      height: 50px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      background: linear-gradient(135deg, #1677ff, #0f5ee8);
+      box-shadow: 0 10px 22px rgba(18, 105, 242, 0.24);
+    }
+
+    .secondary-btn {
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+    }
+
+    .hidden { display: none !important; }
+
+    .statusbar {
+      min-height: 38px;
+      padding: 12px 22px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+
+    .header {
+      padding: 10px 20px 14px;
+      background: linear-gradient(180deg, rgba(18,105,242,0.10), rgba(255,255,255,0));
+    }
+
+    body.dark .header {
+      background: linear-gradient(180deg, rgba(18,105,242,0.20), rgba(17,24,39,0));
+    }
+
+    .top-line {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-line h2 {
+      margin: 0;
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .meta-stack {
+      display: grid;
+      gap: 9px;
+      justify-items: start;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .network {
+      justify-self: end;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--orange);
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .network.good { color: var(--green); }
+
+    .project-chips {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .project-chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #1677ff, #2b8cff);
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 16px 92px;
+      scroll-behavior: smooth;
+    }
+
+    .content::-webkit-scrollbar { width: 0; }
+
+    .section {
+      margin: 12px 0;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section.flat {
+      box-shadow: none;
+    }
+
+    .section-head {
+      padding: 15px 16px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .icon-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 13px;
+    }
+
+    .alarm-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 10px 6px 14px;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .alarm-item {
+      min-width: 0;
+      padding: 6px 2px;
+      border-radius: 8px;
+    }
+
+    .alarm-item i {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 4px;
+    }
+
+    .alarm-item strong {
+      display: block;
+      font-size: clamp(26px, 8vw, 36px);
+      line-height: 1.1;
+      margin: 4px 0;
+    }
+
+    .alarm-item span {
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .red { color: var(--red); }
+    .orange { color: var(--orange); }
+    .yellow { color: var(--yellow); }
+    .blue { color: var(--blue); }
+    .green { color: var(--green); }
+
+    .summary-row {
+      border-top: 1px solid var(--line);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .online-list {
+      padding: 0 16px 12px;
+    }
+
+    .online-row {
+      display: grid;
+      grid-template-columns: 76px 1fr 82px 18px;
+      align-items: center;
+      gap: 10px;
+      min-height: 64px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .online-row:last-child { border-bottom: 0; }
+
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e6ebf0;
+      overflow: hidden;
+    }
+
+    body.dark .bar { background: #2b3a52; }
+
+    .bar span {
+      height: 100%;
+      display: block;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #12b981, #0aa37f);
+    }
+
+    .online-rate {
+      text-align: right;
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .action-card {
+      min-height: 86px;
+      border-radius: 8px;
+      padding: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
+
+    .action-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .action-card span { opacity: 0.88; }
+
+    .action-card.scan { background: linear-gradient(135deg, #10bfa4, #0aa987); }
+    .action-card.report { background: linear-gradient(135deg, #1b82ff, #1269f2); }
+
+    .bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 78px;
+      padding: 8px 10px 10px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: rgba(255, 255, 255, 0.94);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+      z-index: 20;
+    }
+
+    body.dark .bottom-nav {
+      background: rgba(24, 34, 53, 0.94);
+    }
+
+    .nav-btn {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 8px;
+      position: relative;
+      min-width: 0;
+    }
+
+    .nav-btn.active { color: var(--primary); }
+
+    .nav-btn .badge {
+      position: absolute;
+      top: 4px;
+      right: 20%;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--red);
+      font-size: 12px;
+      padding: 0 5px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .data-hero {
+      margin: 0 -16px 12px;
+      padding: 10px 16px 18px;
+      background: linear-gradient(135deg, #059b8d, #006e82);
+      color: #fff;
+    }
+
+    .data-hero .section-title { color: #fff; }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .filter-btn {
+      min-height: 44px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 800;
+      min-width: 0;
+    }
+
+    .filter-btn span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .facility-card {
+      padding: 16px;
+    }
+
+    .facility-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .facility-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .facility-card h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .kv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .kv-grid strong {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 28px;
+      border-radius: 8px;
+      padding: 0 9px;
+      font-size: 13px;
+      font-weight: 900;
+      background: rgba(20,166,125,0.10);
+      color: var(--green);
+      border: 1px solid rgba(20,166,125,0.22);
+    }
+
+    .status-chip.warn {
+      color: var(--orange);
+      background: rgba(249,115,22,0.10);
+      border-color: rgba(249,115,22,0.22);
+    }
+
+    .status-chip.danger {
+      color: var(--red);
+      background: rgba(239,51,73,0.10);
+      border-color: rgba(239,51,73,0.22);
+    }
+
+    .segmented {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .segmented button {
+      min-height: 42px;
+      font-weight: 800;
+      color: var(--muted);
+      border-right: 1px solid var(--line);
+    }
+
+    .segmented button:last-child { border-right: 0; }
+    .segmented button.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .chart-wrap {
+      padding: 14px 12px 16px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: -1px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .sensor-table {
+      border-top: 1px solid var(--line);
+    }
+
+    .table-head,
+    .sensor-row {
+      display: grid;
+      grid-template-columns: 1.4fr 0.7fr 0.6fr 0.6fr 54px;
+      align-items: center;
+      gap: 8px;
+      min-height: 58px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .table-head {
+      min-height: 44px;
+      color: var(--muted);
+      font-weight: 800;
+      background: var(--surface-2);
+    }
+
+    .sensor-name {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .sensor-name strong,
+    .sensor-name span {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .sensor-icon {
+      width: 32px;
+      height: 32px;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .spark {
+      height: 22px;
+      border-bottom: 2px solid currentColor;
+      opacity: 0.9;
+    }
+
+    .notice {
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(249,115,22,0.10);
+      color: #b85a00;
+      border: 1px solid rgba(249,115,22,0.20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 800;
+    }
+
+    body.dark .notice { color: #ffbe6a; }
+
+    .warning-head {
+      padding: 6px 4px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--bg);
+    }
+
+    .level-chips {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 10px 0 0;
+      scrollbar-width: none;
+    }
+
+    .level-chips::-webkit-scrollbar { display: none; }
+
+    .level-chip {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .level-chip.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .warning-card {
+      min-height: 88px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      text-align: left;
+      width: 100%;
+    }
+
+    .warning-card.active {
+      border-color: var(--red);
+      box-shadow: 0 0 0 1px rgba(239,51,73,0.05), var(--shadow);
+    }
+
+    .warning-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--red);
+    }
+
+    .warning-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .warning-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .detail {
+      border-color: rgba(239,51,73,0.35);
+    }
+
+    .detail-title {
+      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-title h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .detail-grid {
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .detail-field {
+      display: flex;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .detail-field i {
+      color: var(--primary);
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .detail-field span {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 3px;
+      font-size: 12px;
+    }
+
+    .detail-field strong {
+      display: block;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .map-box {
+      margin: 0 16px 15px;
+      min-height: 118px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    .map-box img {
+      width: 100%;
+      height: 118px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .map-label {
+      position: absolute;
+      left: 12px;
+      top: 14px;
+      width: 156px;
+      background: rgba(255,255,255,0.82);
+      border-radius: 8px;
+      padding: 10px;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.6;
+      backdrop-filter: blur(5px);
+    }
+
+    .evidence {
+      padding: 0 16px 16px;
+    }
+
+    .upload-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .upload-box {
+      min-height: 72px;
+      border: 1px dashed #b8c2d0;
+      border-radius: 8px;
+      color: var(--muted);
+      background: var(--surface-2);
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 5px;
+      font-weight: 800;
+    }
+
+    .sticky-actions {
+      position: sticky;
+      bottom: -1px;
+      padding: 10px 12px 12px;
+      background: linear-gradient(180deg, rgba(245,248,251,0), var(--bg) 20%);
+      display: grid;
+      grid-template-columns: 0.9fr 1.4fr;
+      gap: 10px;
+      z-index: 4;
+    }
+
+    body.dark .sticky-actions {
+      background: linear-gradient(180deg, rgba(17,24,39,0), var(--bg) 20%);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .metric {
+      padding: 14px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 28px;
+    }
+
+    .timeline {
+      padding: 8px 16px 16px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-row:last-child { border-bottom: 0; }
+
+    .profile-card {
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .profile-card h3 {
+      margin: 0 0 5px;
+      font-size: 18px;
+    }
+
+    .profile-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .menu-list {
+      padding: 0 16px;
+    }
+
+    .menu-item {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      width: 100%;
+      text-align: left;
+      font-weight: 800;
+    }
+
+    .menu-item:last-child { border-bottom: 0; }
+
+    .menu-item .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .switch {
+      width: 48px;
+      height: 28px;
+      border-radius: 999px;
+      padding: 3px;
+      background: #d2dae6;
+      transition: 0.2s ease;
+    }
+
+    .switch span {
+      display: block;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      transition: 0.2s ease;
+    }
+
+    .switch.on {
+      background: var(--primary);
+    }
+
+    .switch.on span {
+      transform: translateX(20px);
+    }
+
+    .sheet-backdrop,
+    .toast-backdrop {
+      position: absolute;
+      inset: 0;
+      display: none;
+      background: rgba(15, 23, 42, 0.35);
+      z-index: 40;
+    }
+
+    .sheet-backdrop.show,
+    .toast-backdrop.show {
+      display: block;
+    }
+
+    .sheet {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--surface);
+      border-radius: 18px 18px 0 0;
+      border-top: 1px solid var(--line);
+      padding: 16px;
+      max-height: 82%;
+      overflow-y: auto;
+      box-shadow: 0 -18px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .sheet h3 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    .sheet-option {
+      min-height: 52px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .sheet-option:last-child { border-bottom: 0; }
+
+    .form-area textarea {
+      width: 100%;
+      min-height: 96px;
+      resize: none;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 12px;
+      outline: 0;
+    }
+
+    .modal {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 18px;
+      display: none;
+      z-index: 50;
+      box-shadow: var(--shadow);
+    }
+
+    .modal.show { display: block; }
+
+    .modal h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+    }
+
+    .modal p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 60px;
+      min-height: 46px;
+      display: none;
+      align-items: center;
+      gap: 9px;
+      padding: 0 14px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 800;
+      background: rgba(18, 105, 242, 0.94);
+      z-index: 70;
+      box-shadow: var(--shadow);
+    }
+
+    .toast.show { display: flex; }
+
+    .permission-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 26px;
+      padding: 0 8px;
+      border-radius: 8px;
+      background: rgba(18,105,242,0.10);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid rgba(18,105,242,0.18);
+    }
+
+    .empty-state {
+      padding: 28px 16px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+    }
+
+    .rule-box {
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      line-height: 1.7;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 520px) {
+      .stage {
+        padding: 0;
+        place-items: stretch;
+      }
+
+      .phone {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="phone" id="phone">
+      <div class="app" id="loginApp">
+        <section class="login-screen">
+          <div class="brand">
+            <div class="logo"><i data-lucide="route"></i></div>
+            <div>
+              <h1>福建高速监测</h1>
+              <p>监测 · 预警 · 处置 · 归档</p>
+            </div>
+          </div>
+          <div class="login-panel">
+            <div class="field">
+              <label for="account">账号</label>
+              <div class="input-wrap">
+                <i data-lucide="user"></i>
+                <input id="account" value="fzyg_001" autocomplete="username">
+              </div>
+            </div>
+            <div class="field">
+              <label for="password">密码</label>
+              <div class="input-wrap">
+                <i data-lucide="lock"></i>
+                <input id="password" type="password" value="123456" autocomplete="current-password">
+              </div>
+            </div>
+            <label class="check-row">
+              <input type="checkbox" checked>
+              <span>记住用户</span>
+              <input type="checkbox" checked>
+              <span>记住密码</span>
+            </label>
+            <button class="primary-btn" style="width: 100%" id="loginBtn">
+              <i data-lucide="log-in"></i>
+              登录进入
+            </button>
+          </div>
+          <div class="rule-box">
+            权限说明：管理员可下发设备指令；管理公司与养护站侧重数据查看和预警核实；超级管理员额外拥有账号与权限配置入口。
+          </div>
+        </section>
+      </div>
+
+      <div class="app hidden" id="mainApp">
+        <div class="toast" id="toast"><i data-lucide="check-circle"></i><span id="toastText">操作成功</span></div>
+        <div class="statusbar">
+          <span>09:41</span>
+          <span class="status-icons"><i data-lucide="signal-high"></i><span>4G</span><i data-lucide="battery-full"></i></span>
+        </div>
+        <header class="header" id="appHeader">
+          <div class="top-line">
+            <div class="meta-stack">
+              <button class="meta-pill" data-sheet="region"><i data-lucide="map-pin"></i><span id="regionText">福建省</span><i data-lucide="chevron-down"></i></button>
+              <button class="meta-pill" data-sheet="role"><i data-lucide="hard-hat"></i><span id="roleText">运维人员</span><i data-lucide="chevron-down"></i></button>
+            </div>
+            <h2 id="pageTitle">福建高速监测</h2>
+            <button class="network" id="netBtn"><i data-lucide="signal-medium"></i><span id="netText">网络较弱</span></button>
+          </div>
+          <div class="project-chips" id="projectChips">
+            <button class="chip active" data-project="全部项目">全部项目</button>
+            <button class="chip" data-project="福州公司">福州公司</button>
+            <button class="chip" data-project="厦门公司">厦门公司</button>
+            <button class="chip" data-project="泉州公司">泉州公司</button>
+            <button class="chip" data-sheet="projectMore">更多<i data-lucide="chevron-down"></i></button>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="screen active" data-screen="home">
+            <div class="section">
+              <div class="section-head">
+                <h3 class="section-title"><span class="icon-badge"><i data-lucide="siren"></i></span>预警概览</h3>
+                <button class="meta-pill muted" id="refreshBtn"><span>05-20 09:41</span><i data-lucide="refresh-cw"></i></button>
+              </div>
+              <div class="alarm-grid">
+                <button class="alarm-item red" data-go="warning" data-level="红色预警"><i data-lucide="alarm-clock"></i><span>一级预警</span><strong>12</strong><small>较昨日 +3</small></button>
+                <button class="alarm-item orange" data-go="warning" data-level="橙色预警"><i data-lucide="bell-ring"></i><span>二级预警</span><strong>28</strong><small>较昨日 +5</small></button>
+                <button class="alarm-item yellow" data-go="warning" data-level="黄色预警"><i data-lucide="bell"></i><span>三级预警</span><strong>67</strong><small>较昨日 -2</small></button>
+                <button class="alarm-item blue" data-go="warning" data-level="蓝色预警"><i data-lucide="info"></i><span>提示预警</span><strong>153</strong><small>较昨日 +8</small></button>
+              </div>
+              <button class="summary-row" data-go="warning">
+                <span>今日共预警 <strong class="red">260</strong> 起，已处置 <strong class="green">73</strong> 起，处理中 <strong class="blue">54</strong> 起</span>
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="section">
+              <div class="section-head">
+                <h3 class="section-title"><span class="icon-badge"><i data-lucide="activity"></i></span>设备在线率（按管理单位）</h3>
+                <button class="meta-pill muted" data-go="data">更多<i data-lucide="chevron-right"></i></button>
+              </div>
+              <div class="online-list">
+                <button class="online-row" data-go="data">
+                  <span>福州公司</span><div class="bar"><span style="width:96.5%"></span></div><strong class="online-rate green">96.5%</strong><i data-lucide="chevron-right"></i>
+                </button>
+                <button class="online-row" data-go="data">
+                  <span>厦门公司</span><div class="bar"><span style="width:93.2%"></span></div><strong class="online-rate green">93.2%</strong><i data-lucide="chevron-right"></i>
+                </button>
+                <button class="online-row" data-go="data">
+                  <span>泉州公司</span><div class="bar"><span style="width:89.7%"></span></div><strong class="online-rate green">89.7%</strong><i data-lucide="chevron-right"></i>
+                </button>
+                <button class="online-row" data-go="data">
+                  <span>漳州公司</span><div class="bar"><span style="width:82.1%;background:var(--orange)"></span></div><strong class="online-rate orange">82.1%</strong><i data-lucide="chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="quick-actions">
+              <button class="action-card scan" id="scanBtn">
+                <span><strong>扫码</strong>扫描设备二维码</span>
+                <i data-lucide="scan-line"></i>
+              </button>
+              <button class="action-card report" data-sheet="report">
+                <span><strong>隐患上报</strong>上报隐患信息</span>
+                <i data-lucide="upload-cloud"></i>
+              </button>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="data">
+            <div class="data-hero">
+              <div class="row-between">
+                <div>
+                  <h3 class="section-title">监测数据</h3>
+                  <div class="small">离线缓存已同步 · 更新 05-20 09:41</div>
+                </div>
+                <button class="chip active" id="syncBtn"><i data-lucide="refresh-cw"></i>刷新</button>
+              </div>
+              <div class="filter-grid">
+                <button class="filter-btn" data-sheet="company"><span id="companyText">福州公司</span><i data-lucide="chevron-down"></i></button>
+                <button class="filter-btn" data-sheet="route"><span id="routeText">G15沈海高速</span><i data-lucide="chevron-down"></i></button>
+                <button class="filter-btn" data-sheet="facility"><span id="facilityText">K213+450右侧边坡</span><i data-lucide="chevron-down"></i></button>
+                <button class="filter-btn" data-sheet="sensor"><span id="sensorText">全部传感器</span><i data-lucide="chevron-down"></i></button>
+              </div>
+            </div>
+
+            <div class="section facility-card">
+              <div class="facility-head">
+                <span class="facility-icon"><i data-lucide="mountain"></i></span>
+                <div>
+                  <h3>K213+450右侧边坡监测点</h3>
+                  <div class="kv-grid">
+                    <span>桩号：<strong>K213+450</strong></span>
+                    <span>方向：<strong>福州往厦门</strong></span>
+                    <span>类型：<strong>边坡</strong></span>
+                    <span>设备：<strong>BPJC-0213</strong></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row-between">
+                <span class="status-chip"><i data-lucide="wifi"></i>在线</span>
+                <span class="small muted">通信正常 · 1 分钟前接收</span>
+              </div>
+            </div>
+
+            <div class="segmented" id="rangeTabs">
+              <button>1小时</button><button>6小时</button><button class="active">24小时</button><button>7天</button><button>30天</button>
+            </div>
+
+            <div class="section">
+              <div class="section-head">
+                <h3 class="section-title">多传感器数据曲线</h3>
+                <div class="segmented" style="width: 130px"><button class="active">图表</button><button>表格</button></div>
+              </div>
+              <div class="chart-wrap">
+                <div class="legend">
+                  <span><i class="dot" style="background:var(--blue)"></i>位移(mm)</span>
+                  <span><i class="dot" style="background:var(--green)"></i>倾角(°)</span>
+                  <span><i class="dot" style="background:#7c3aed"></i>雨量(mm)</span>
+                </div>
+                <canvas id="sensorChart" width="660" height="320"></canvas>
+              </div>
+              <div class="sensor-table">
+                <div class="table-head"><span>传感器</span><span>最新值</span><span>单位</span><span>状态</span><span>趋势</span></div>
+                <button class="sensor-row" data-sheet="sensorDetail">
+                  <span class="sensor-name"><span class="sensor-icon"><i data-lucide="move-horizontal"></i></span><span><strong>位移计</strong><span class="muted small">SEN-0001</span></span></span>
+                  <strong>32.45</strong><span>mm</span><span class="green">正常</span><span class="spark blue"></span>
+                </button>
+                <button class="sensor-row" data-sheet="sensorDetail">
+                  <span class="sensor-name"><span class="sensor-icon" style="background:var(--green)"><i data-lucide="triangle-right"></i></span><span><strong>倾角计</strong><span class="muted small">SEN-0002</span></span></span>
+                  <strong>0.28</strong><span>°</span><span class="green">正常</span><span class="spark green"></span>
+                </button>
+                <button class="sensor-row" data-sheet="sensorDetail">
+                  <span class="sensor-name"><span class="sensor-icon" style="background:#7c3aed"><i data-lucide="cloud-rain"></i></span><span><strong>雨量计</strong><span class="muted small">SEN-0003</span></span></span>
+                  <strong>8.6</strong><span>mm</span><span class="green">正常</span><span class="spark" style="color:#7c3aed"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-head"><h3 class="section-title"><span class="icon-badge"><i data-lucide="server"></i></span>设备状态</h3></div>
+              <div class="kv-grid" style="padding: 0 16px 16px">
+                <span>供电电压：<strong>13.2V</strong></span>
+                <span>电池电量：<strong>78%</strong></span>
+                <span>信号强度：<strong>-67dBm</strong></span>
+                <span>固件版本：<strong>V2.3.7</strong></span>
+              </div>
+            </div>
+
+            <div class="notice">
+              <span><i data-lucide="lock"></i> 指令下发功能仅限管理员使用</span>
+              <button class="primary-btn" style="height: 42px" id="commandBtn"><i data-lucide="send"></i>指令下发</button>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="warning">
+            <div class="warning-head">
+              <div class="segmented" id="warningTabs"><button class="active">待核实 <b class="red">12</b></button><button>处理中 <b class="orange">5</b></button><button>已归档</button></div>
+              <div class="level-chips" id="levelChips">
+                <button class="level-chip active" data-level="全部">全部 <b>12</b></button>
+                <button class="level-chip red" data-level="红色预警">红色预警 <b>2</b></button>
+                <button class="level-chip orange" data-level="橙色预警">橙色预警 <b>3</b></button>
+                <button class="level-chip yellow" data-level="黄色预警">黄色预警 <b>4</b></button>
+                <button class="level-chip blue" data-level="蓝色预警">蓝色预警 <b>3</b></button>
+                <button class="level-chip" data-sheet="warningFilter"><i data-lucide="sliders-horizontal"></i>筛选</button>
+              </div>
+            </div>
+
+            <div id="warningList">
+              <button class="warning-card active" data-warning="red">
+                <span class="warning-icon"><i data-lucide="triangle-alert"></i></span>
+                <span><h3>G15沈海高速 K213+450 右侧边坡滑塌</h3><p><i data-lucide="clock"></i>2025-05-20 08:35 · 待核实</p></span>
+                <span class="status-chip danger">红色预警</span>
+              </button>
+              <button class="warning-card" data-warning="orange">
+                <span class="warning-icon" style="background:var(--orange)"><i data-lucide="bell-ring"></i></span>
+                <span><h3>G1505福厦高速 K68+200 桥梁伸缩缝异响</h3><p><i data-lucide="clock"></i>2025-05-20 07:52 · 待核实</p></span>
+                <span class="status-chip warn">橙色预警</span>
+              </button>
+              <button class="warning-card" data-warning="yellow">
+                <span class="warning-icon" style="background:var(--yellow)"><i data-lucide="bell"></i></span>
+                <span><h3>G76厦蓉高速 K124+300 边坡落石</h3><p><i data-lucide="clock"></i>2025-05-20 06:41 · 待核实</p></span>
+                <span class="status-chip" style="color:var(--yellow);background:rgba(217,169,0,.1);border-color:rgba(217,169,0,.25)">黄色预警</span>
+              </button>
+              <button class="warning-card" data-warning="blue">
+                <span class="warning-icon" style="background:var(--blue)"><i data-lucide="info"></i></span>
+                <span><h3>G15沈海高速 K182+900 隧道照明异常</h3><p><i data-lucide="clock"></i>2025-05-20 05:18 · 待核实</p></span>
+                <span class="status-chip" style="color:var(--blue);background:rgba(22,119,255,.1);border-color:rgba(22,119,255,.25)">蓝色预警</span>
+              </button>
+            </div>
+
+            <div class="section detail" id="warningDetail">
+              <div class="detail-title">
+                <h3 id="detailTitle">G15沈海高速 K213+450 右侧边坡滑塌</h3>
+                <span class="status-chip danger" id="detailLevel">红色预警</span>
+              </div>
+              <div class="detail-grid">
+                <div class="detail-field"><i data-lucide="building-2"></i><div><span>设施名称</span><strong id="detailFacility">右侧边坡</strong></div></div>
+                <div class="detail-field"><i data-lucide="server"></i><div><span>关联设备</span><strong>边坡监测仪 BPJC-0213</strong></div></div>
+                <div class="detail-field"><i data-lucide="road"></i><div><span>路段桩号</span><strong id="detailPile">G15沈海高速 K213+450</strong></div></div>
+                <div class="detail-field"><i data-lucide="circle-dot"></i><div><span>当前状态</span><strong class="red" id="detailStatus">待核实</strong></div></div>
+                <div class="detail-field"><i data-lucide="map-pin"></i><div><span>经纬度</span><strong>26.143567, 119.602345</strong></div></div>
+                <div class="detail-field"><i data-lucide="user-check"></i><div><span>核实人</span><strong id="verifier">—</strong></div></div>
+                <div class="detail-field"><i data-lucide="grid-2x2"></i><div><span>事件类型</span><strong id="eventType">边坡滑塌</strong></div></div>
+                <div class="detail-field"><i data-lucide="clipboard-check"></i><div><span>核实结果</span><strong id="resultText">—</strong></div></div>
+                <div class="detail-field"><i data-lucide="calendar-clock"></i><div><span>发生时间</span><strong>2025-05-20 08:35:21</strong></div></div>
+                <div class="detail-field"><i data-lucide="file-key"></i><div><span>告警 ID</span><strong>ALM-20250520-00835</strong></div></div>
+              </div>
+              <div class="map-box">
+                <img src="assets/warning-map.png" alt="告警位置地图">
+                <div class="map-label">福建省莆田市秀屿区<br>月塘镇附近</div>
+              </div>
+              <div class="evidence">
+                <div class="row-between">
+                  <strong>现场证据（<span id="evidenceCount">0</span>/6）</strong>
+                  <span class="small muted">支持拍照/录像，单文件&lt;50MB</span>
+                </div>
+                <div class="upload-row">
+                  <button class="upload-box" id="photoBtn"><i data-lucide="camera"></i>拍照</button>
+                  <button class="upload-box" id="videoBtn"><i data-lucide="video"></i>录像</button>
+                  <button class="upload-box"><i data-lucide="plus"></i></button>
+                  <button class="upload-box"><i data-lucide="plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="sticky-actions">
+              <button class="secondary-btn" id="archiveBtn"><i data-lucide="archive"></i>归档</button>
+              <button class="primary-btn" data-sheet="verify"><i data-lucide="camera"></i>现场核实</button>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="stats">
+            <div class="stats-grid">
+              <div class="metric"><span>近一个月告警</span><strong class="red">1,286</strong><small class="muted">环比 +8.2%</small></div>
+              <div class="metric"><span>历史告警总数</span><strong>28,640</strong><small class="muted">已归档 26,911</small></div>
+              <div class="metric"><span>平均处置时长</span><strong class="green">42m</strong><small class="muted">较上月 -11m</small></div>
+              <div class="metric"><span>设备在线率</span><strong class="green">91.8%</strong><small class="muted">离线设备 213</small></div>
+            </div>
+            <div class="section">
+              <div class="section-head"><h3 class="section-title">预警等级分布</h3><button class="chip active">本月</button></div>
+              <div class="chart-wrap"><canvas id="barChart" width="660" height="280"></canvas></div>
+            </div>
+            <div class="section">
+              <div class="section-head"><h3 class="section-title">处置复盘</h3></div>
+              <div class="timeline">
+                <div class="timeline-row"><strong>08:35</strong><span>红色预警推送至福州分中心与养护巡查组，强提醒已触发。</span></div>
+                <div class="timeline-row"><strong>08:42</strong><span>现场人员接单，定位打卡成功，弱网环境启用本地缓存。</span></div>
+                <div class="timeline-row"><strong>09:06</strong><span>上传 3 张现场图片和 1 段视频，系统回传后台。</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="mine">
+            <div class="section profile-card">
+              <div class="avatar">林</div>
+              <div>
+                <h3>林建平</h3>
+                <p>福州公司 · 福州分中心养护站</p>
+                <p><span class="permission-tag" id="permissionTag"><i data-lucide="shield-check"></i>运维人员</span></p>
+              </div>
+            </div>
+            <div class="section">
+              <div class="menu-list">
+                <button class="menu-item" data-sheet="profile"><span class="left"><i data-lucide="id-card"></i>个人信息</span><i data-lucide="chevron-right"></i></button>
+                <button class="menu-item" data-sheet="permission"><span class="left"><i data-lucide="shield"></i>角色权限查看</span><i data-lucide="chevron-right"></i></button>
+                <button class="menu-item" id="darkToggle"><span class="left"><i data-lucide="moon"></i>深色模式</span><span class="switch" id="darkSwitch"><span></span></span></button>
+                <button class="menu-item" id="clearCache"><span class="left"><i data-lucide="database-zap"></i>离线缓存清理</span><span class="muted small">128MB</span></button>
+                <button class="menu-item" id="versionBtn"><span class="left"><i data-lucide="refresh-ccw"></i>版本更新</span><span class="muted small">V1.0.3</span></button>
+                <button class="menu-item" data-sheet="help"><span class="left"><i data-lucide="circle-help"></i>帮助说明</span><i data-lucide="chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-head"><h3 class="section-title">角色差异标注</h3></div>
+              <div class="rule-box" style="margin: 0 16px 16px">
+                管理公司：数据查看、预警核实。管理员：数据查看、预警核实、指令下发。超级管理员：账号配置、权限管理。
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <nav class="bottom-nav" id="bottomNav">
+          <button class="nav-btn active" data-nav="home"><i data-lucide="home"></i><span>首页</span></button>
+          <button class="nav-btn" data-nav="data"><i data-lucide="database"></i><span>数据</span></button>
+          <button class="nav-btn" data-nav="warning"><i data-lucide="bell"></i><span>预警</span><b class="badge">3</b></button>
+          <button class="nav-btn" data-nav="stats"><i data-lucide="chart-pie"></i><span>统计</span></button>
+          <button class="nav-btn" data-nav="mine"><i data-lucide="user-round"></i><span>我的</span></button>
+        </nav>
+
+        <div class="sheet-backdrop" id="sheetBackdrop">
+          <div class="sheet" id="sheet"></div>
+        </div>
+
+        <div class="toast-backdrop" id="modalBackdrop"></div>
+        <div class="modal" id="simpleModal">
+          <h3 id="modalTitle">提示</h3>
+          <p id="modalText">内容</p>
+          <button class="primary-btn" style="width:100%" id="modalOk">知道了</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/lucide.min.js"></script>
+  <script>
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    const state = {
+      screen: 'home',
+      role: '运维人员',
+      networkGood: false,
+      evidence: 0,
+      archived: false
+    };
+
+    const titles = {
+      home: '福建高速监测',
+      data: '监测数据',
+      warning: '预警核实',
+      stats: '统计报表',
+      mine: '我的'
+    };
+
+    const sheetData = {
+      region: ['福建省', '福州市', '厦门市', '泉州市', '漳州市', '宁德市'],
+      role: ['运维人员', '管理公司', '管理员', '超级管理员'],
+      projectMore: ['莆田公司', '三明公司', '南平公司', '龙岩公司', '宁德公司'],
+      company: ['福州公司', '厦门公司', '泉州公司', '漳州公司', '宁德公司'],
+      route: ['G15沈海高速', 'G1505福厦高速', 'G76厦蓉高速', 'G3京台高速'],
+      facility: ['K213+450右侧边坡', 'K68+200桥梁', 'K182+900隧道', 'K124+300高边坡'],
+      sensor: ['全部传感器', '位移计 SEN-0001', '倾角计 SEN-0002', '雨量计 SEN-0003']
+    };
+
+    const warnings = {
+      red: {
+        title: 'G15沈海高速 K213+450 右侧边坡滑塌',
+        level: '红色预警',
+        color: 'danger',
+        facility: '右侧边坡',
+        pile: 'G15沈海高速 K213+450',
+        event: '边坡滑塌'
+      },
+      orange: {
+        title: 'G1505福厦高速 K68+200 桥梁伸缩缝异响',
+        level: '橙色预警',
+        color: 'warn',
+        facility: '桥梁伸缩缝',
+        pile: 'G1505福厦高速 K68+200',
+        event: '结构异常'
+      },
+      yellow: {
+        title: 'G76厦蓉高速 K124+300 边坡落石',
+        level: '黄色预警',
+        color: '',
+        facility: '高边坡',
+        pile: 'G76厦蓉高速 K124+300',
+        event: '边坡落石'
+      },
+      blue: {
+        title: 'G15沈海高速 K182+900 隧道照明异常',
+        level: '蓝色预警',
+        color: '',
+        facility: '隧道',
+        pile: 'G15沈海高速 K182+900',
+        event: '照明异常'
+      }
+    };
+
+    function createIcons() {
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function showToast(text) {
+      $('#toastText').textContent = text;
+      $('#toast').classList.add('show');
+      setTimeout(() => $('#toast').classList.remove('show'), 1800);
+    }
+
+    function showModal(title, text) {
+      $('#modalTitle').textContent = title;
+      $('#modalText').textContent = text;
+      $('#modalBackdrop').classList.add('show');
+      $('#simpleModal').classList.add('show');
+      createIcons();
+    }
+
+    function closeModal() {
+      $('#modalBackdrop').classList.remove('show');
+      $('#simpleModal').classList.remove('show');
+    }
+
+    function setScreen(screen) {
+      state.screen = screen;
+      $$('.screen').forEach(el => el.classList.toggle('active', el.dataset.screen === screen));
+      $$('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.nav === screen));
+      $('#pageTitle').textContent = titles[screen];
+      $('#projectChips').classList.toggle('hidden', screen !== 'home');
+      drawCharts();
+      createIcons();
+    }
+
+    function openSheet(type) {
+      const sheet = $('#sheet');
+      sheet.innerHTML = '';
+      const title = document.createElement('h3');
+      title.textContent = sheetTitle(type);
+      sheet.appendChild(title);
+
+      if (sheetData[type]) {
+        sheetData[type].forEach(item => {
+          const btn = document.createElement('button');
+          btn.className = 'sheet-option';
+          btn.innerHTML = `<span>${item}</span><i data-lucide="chevron-right"></i>`;
+          btn.onclick = () => chooseSheet(type, item);
+          sheet.appendChild(btn);
+        });
+      } else if (type === 'report') {
+        sheet.innerHTML += `
+          <div class="form-area">
+            <div class="field"><label>隐患类型</label><div class="input-wrap"><i data-lucide="triangle-alert"></i><input value="路面坑槽"></div></div>
+            <div class="field"><label>位置</label><div class="input-wrap"><i data-lucide="map-pin"></i><input value="G15沈海高速 K218+100"></div></div>
+            <div class="field"><label>详细描述</label><textarea>现场发现路面坑槽，影响行车安全，已设置临时警示。</textarea></div>
+            <button class="primary-btn" style="width:100%" id="submitReport"><i data-lucide="upload-cloud"></i>提交隐患</button>
+          </div>`;
+        setTimeout(() => $('#submitReport').onclick = () => { closeSheet(); showToast('隐患已提交，弱网下已进入本地缓存'); }, 0);
+      } else if (type === 'verify') {
+        sheet.innerHTML += `
+          <div class="form-area">
+            <div class="field"><label>核实类型</label><div class="input-wrap"><i data-lucide="clipboard-check"></i><input value="现场确认属实"></div></div>
+            <div class="field"><label>详细描述</label><textarea>现场已到达，边坡局部滑塌，已设置警戒并通知应急处置队伍。</textarea></div>
+            <button class="primary-btn" style="width:100%" id="submitVerify"><i data-lucide="check-circle"></i>提交核实结果</button>
+          </div>`;
+        setTimeout(() => $('#submitVerify').onclick = () => {
+          $('#verifier').textContent = '林建平';
+          $('#resultText').textContent = '现场确认属实';
+          $('#detailStatus').textContent = '处理中';
+          $('#detailStatus').className = 'orange';
+          closeSheet();
+          showToast('核实结果已提交，进入处理中');
+        }, 0);
+      } else if (type === 'warningFilter') {
+        ['管理公司：福州公司', '设施类型：边坡/桥梁/隧道', '时间范围：近24小时', '状态：待核实'].forEach(item => {
+          const btn = document.createElement('button');
+          btn.className = 'sheet-option';
+          btn.innerHTML = `<span>${item}</span><span class="status-chip">已选</span>`;
+          sheet.appendChild(btn);
+        });
+      } else {
+        const map = {
+          sensorDetail: '传感器基础信息、采样频率、阈值配置、最近 24 小时数据质量均可在此查看。',
+          profile: '账号：fzyg_001；所属管理公司：福州公司；养护站：福州分中心养护站。',
+          permission: '当前角色可查看数据、核实预警、提交现场资料。指令下发需管理员权限。',
+          help: '弱网环境会自动缓存上报数据；紧急告警触发铃声、震动与弹窗；普通消息静默推送。'
+        };
+        sheet.innerHTML += `<div class="rule-box">${map[type] || '暂无内容'}</div>`;
+      }
+
+      $('#sheetBackdrop').classList.add('show');
+      createIcons();
+    }
+
+    function sheetTitle(type) {
+      const map = {
+        region: '选择区域',
+        role: '切换角色权限',
+        projectMore: '更多管理公司',
+        company: '选择管理公司',
+        route: '选择路线名称',
+        facility: '选择监测设施',
+        sensor: '选择传感器',
+        report: '隐患上报',
+        verify: '现场核实',
+        warningFilter: '预警筛选',
+        sensorDetail: '传感器详情',
+        profile: '个人信息',
+        permission: '权限说明',
+        help: '帮助说明'
+      };
+      return map[type] || '请选择';
+    }
+
+    function chooseSheet(type, item) {
+      if (type === 'region') $('#regionText').textContent = item;
+      if (type === 'role') {
+        state.role = item;
+        $('#roleText').textContent = item;
+        $('#permissionTag').innerHTML = `<i data-lucide="shield-check"></i>${item}`;
+        showToast(`已切换为${item}`);
+      }
+      if (type === 'projectMore') {
+        $$('.chip[data-project]').forEach(btn => btn.classList.remove('active'));
+        showToast(`已切换至${item}`);
+      }
+      if (type === 'company') $('#companyText').textContent = item;
+      if (type === 'route') $('#routeText').textContent = item;
+      if (type === 'facility') $('#facilityText').textContent = item;
+      if (type === 'sensor') $('#sensorText').textContent = item;
+      closeSheet();
+      drawCharts();
+      createIcons();
+    }
+
+    function closeSheet() {
+      $('#sheetBackdrop').classList.remove('show');
+    }
+
+    function updateWarning(type) {
+      const data = warnings[type];
+      if (!data) return;
+      $('#detailTitle').textContent = data.title;
+      $('#detailLevel').textContent = data.level;
+      $('#detailFacility').textContent = data.facility;
+      $('#detailPile').textContent = data.pile;
+      $('#eventType').textContent = data.event;
+      const level = $('#detailLevel');
+      level.className = 'status-chip';
+      if (data.color) level.classList.add(data.color);
+      if (type === 'yellow') level.style.cssText = 'color:var(--yellow);background:rgba(217,169,0,.1);border-color:rgba(217,169,0,.25)';
+      else if (type === 'blue') level.style.cssText = 'color:var(--blue);background:rgba(22,119,255,.1);border-color:rgba(22,119,255,.25)';
+      else level.style.cssText = '';
+      $$('.warning-card').forEach(card => card.classList.toggle('active', card.dataset.warning === type));
+      $('#warningDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      createIcons();
+    }
+
+    function drawLineChart() {
+      const canvas = $('#sensorChart');
+      if (!canvas || state.screen !== 'data') return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--line');
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 5; i++) {
+        const y = 24 + i * 58;
+        ctx.beginPath(); ctx.moveTo(42, y); ctx.lineTo(w - 20, y); ctx.stroke();
+      }
+      for (let i = 0; i < 6; i++) {
+        const x = 42 + i * ((w - 72) / 5);
+        ctx.beginPath(); ctx.moveTo(x, 22); ctx.lineTo(x, h - 36); ctx.stroke();
+      }
+      const series = [
+        { color: '#1677ff', values: [70,88,98,108,125,145,168,190,205,210,214,225,235,240,236,220] },
+        { color: '#14a67d', values: [210,209,208,204,197,188,183,175,167,160,155,151,146,148,151,154] },
+        { color: '#7c3aed', values: [260,260,260,260,260,245,245,232,232,210,210,210,210,210,260,260] }
+      ];
+      series.forEach(s => {
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        s.values.forEach((v, i) => {
+          const x = 42 + i * ((w - 72) / (s.values.length - 1));
+          const y = v;
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        s.values.forEach((v, i) => {
+          const x = 42 + i * ((w - 72) / (s.values.length - 1));
+          ctx.beginPath(); ctx.arc(x, v, 4, 0, Math.PI * 2); ctx.fillStyle = s.color; ctx.fill();
+        });
+      });
+      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--muted');
+      ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('05-19 09:41', 30, h - 8);
+      ctx.fillText('05-20 09:41', w - 150, h - 8);
+    }
+
+    function drawBarChart() {
+      const canvas = $('#barChart');
+      if (!canvas || state.screen !== 'stats') return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      const bars = [
+        ['红色', 126, '#ef3349'],
+        ['橙色', 318, '#f97316'],
+        ['黄色', 472, '#d9a900'],
+        ['蓝色', 370, '#1677ff']
+      ];
+      const max = 520;
+      bars.forEach((b, i) => {
+        const x = 48 + i * 150;
+        const bh = Math.round((b[1] / max) * 190);
+        ctx.fillStyle = b[2];
+        ctx.fillRect(x, h - 58 - bh, 74, bh);
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text');
+        ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText(b[1], x + 10, h - 68 - bh);
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--muted');
+        ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText(b[0], x + 12, h - 20);
+      });
+    }
+
+    function drawCharts() {
+      requestAnimationFrame(() => {
+        drawLineChart();
+        drawBarChart();
+      });
+    }
+
+    function bindEvents() {
+      $('#loginBtn').onclick = () => {
+        $('#loginApp').classList.add('hidden');
+        $('#mainApp').classList.remove('hidden');
+        showToast('登录成功，已校验角色权限');
+        setScreen('home');
+      };
+
+      $('#bottomNav').addEventListener('click', e => {
+        const btn = e.target.closest('[data-nav]');
+        if (btn) setScreen(btn.dataset.nav);
+      });
+
+      document.addEventListener('click', e => {
+        const go = e.target.closest('[data-go]');
+        if (go) setScreen(go.dataset.go);
+        const sheetBtn = e.target.closest('[data-sheet]');
+        if (sheetBtn) openSheet(sheetBtn.dataset.sheet);
+      });
+
+      $('#projectChips').addEventListener('click', e => {
+        const chip = e.target.closest('[data-project]');
+        if (!chip) return;
+        $$('#projectChips .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        showToast(`已筛选：${chip.dataset.project}`);
+      });
+
+      $('#rangeTabs').addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        $$('#rangeTabs button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        drawCharts();
+      });
+
+      $('#warningTabs').addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        $$('#warningTabs button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (btn.textContent.includes('已归档')) {
+          $('#warningList').classList.add('hidden');
+          $('#warningDetail').classList.add('hidden');
+        } else {
+          $('#warningList').classList.remove('hidden');
+          $('#warningDetail').classList.remove('hidden');
+        }
+      });
+
+      $('#levelChips').addEventListener('click', e => {
+        const btn = e.target.closest('[data-level]');
+        if (!btn) return;
+        $$('#levelChips .level-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showToast(`预警筛选：${btn.dataset.level}`);
+      });
+
+      $('#warningList').addEventListener('click', e => {
+        const card = e.target.closest('[data-warning]');
+        if (card) updateWarning(card.dataset.warning);
+      });
+
+      $('#photoBtn').onclick = () => {
+        state.evidence = Math.min(6, state.evidence + 1);
+        $('#evidenceCount').textContent = state.evidence;
+        showToast('现场照片已加入待上传队列');
+      };
+      $('#videoBtn').onclick = () => {
+        state.evidence = Math.min(6, state.evidence + 1);
+        $('#evidenceCount').textContent = state.evidence;
+        showToast('现场录像已压缩并缓存');
+      };
+      $('#archiveBtn').onclick = () => {
+        $('#detailStatus').textContent = '已归档';
+        $('#detailStatus').className = 'muted';
+        state.archived = true;
+        showToast('告警已归档，全流程留痕完成');
+      };
+
+      $('#commandBtn').onclick = () => {
+        if (!['管理员', '超级管理员'].includes(state.role)) {
+          showModal('权限不足', '当前角色仅可查看数据与核实预警。请切换为管理员后再下发设备控制指令。');
+        } else {
+          showModal('指令下发确认', '将向 BPJC-0213 下发设备自检指令，指令执行结果会回传至设备状态。');
+        }
+      };
+
+      $('#darkToggle').onclick = () => {
+        document.body.classList.toggle('dark');
+        $('#darkSwitch').classList.toggle('on');
+        drawCharts();
+      };
+      $('#clearCache').onclick = () => showToast('离线缓存已清理');
+      $('#versionBtn').onclick = () => showModal('版本更新', '当前已是最新版本 V1.0.3。');
+      $('#scanBtn').onclick = () => showModal('扫码模拟', '已识别设备二维码：BPJC-0213，正在打开监测数据详情。');
+      $('#syncBtn').onclick = () => showToast('数据已刷新，质量 100%');
+      $('#refreshBtn').onclick = () => showToast('告警数据已刷新');
+      $('#netBtn').onclick = () => {
+        state.networkGood = !state.networkGood;
+        $('#netBtn').classList.toggle('good', state.networkGood);
+        $('#netText').textContent = state.networkGood ? '网络良好' : '网络较弱';
+        showToast(state.networkGood ? '网络状态恢复良好' : '弱网模式已启用本地缓存');
+      };
+
+      $('#sheetBackdrop').onclick = e => {
+        if (e.target.id === 'sheetBackdrop') closeSheet();
+      };
+      $('#modalBackdrop').onclick = closeModal;
+      $('#modalOk').onclick = closeModal;
+    }
+
+    bindEvents();
+    createIcons();
+    drawCharts();
+  </script>
+</body>
+</html>
